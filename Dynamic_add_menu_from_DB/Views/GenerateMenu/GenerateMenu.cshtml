@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Dynamic_add_menu_from_DB.Models.Menu>
+
+
+
+@*<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">@ShowMenu(Model)</ul>
+
+        </div>
+    </div>
+</nav>*@
+<div class="treeview">
+    <ul class="get">
+        <li class="all">@ShowMenu(Model)</li>
+    </ul>
+</div>
+
+
+@helper ShowMenu(IEnumerable<Dynamic_add_menu_from_DB.Models.Menu> menuList)
+{
+foreach (var s in menuList)
+{
+<li class="@(s.List.Any()?"dropdown":"") main">
+    @if(s.List.Any())
+    {
+        @*<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            @s.menu_name
+        </a>*@
+        
+        <span class="main-menu">
+            <span class="collapse-a collapsible">&nbsp;</span>
+            @s.menu_name
+        </span>
+
+        <ul>@ShowMenu(s.List)</ul>
+        
+        
+    }
+    else
+    {
+        @*<a href="#" class="s_sub">@s.menu_name</a>*@
+        <span>@s.menu_name</span>
+        
+    }
+
+
+</li>
+}
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(".treeview li>ul").css('display', 'none');
+
+        $(".collapsible").click(function (e) {
+            e.preventDefault();
+            $(this).toggleClass("collapse-a expand");
+            $(this).closest('li').children('ul').slideToggle();
+        });
+
+
+
+
+    });
+</script>
+
+<style>
+        .collapse-a {
+        width: 15px;
+        background-image: url('../Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -36px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .expand {
+        width: 15px;
+        background-image: url('../Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -50px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .treeview ul {
+        font: 14px Arial, Sans-Serif;
+        /*margin: 0px;*/
+        margin-bottom: 5px;
+        padding-left: 20px;
+        list-style: none;
+    }
+
+    .treeview > li > a {
+        font-weight: bold;
+    }
+
+    .treeview {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+        .treeview li a {
+            padding: 4px;
+            font-size: 12px;
+            display: inline-block;
+            text-decoration: none;
+            width: auto;
+        }
+</style>
